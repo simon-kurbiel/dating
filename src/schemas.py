@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Flo
+from pydantic import BaseModel, EmailStr
 from typing import Annotated
 from fastapi import Body
 
@@ -40,14 +40,26 @@ class Image(BaseModel):
     
     
 # Profile
-class Profile(BaseModel):
-    location : str | None = None
-    longitude : float
-    latitude : float
+
+class ProfileBase(BaseModel):
     bio : str | None = None
     college : str | None = None
     occupation : str | None = None
     looking_for : str | None = None
+    
+class Profile(ProfileBase):
+    longitude : float
+    latitude : float
+    
+    
+class ProfileOut(ProfileBase):
+    location : str
+    
+
+class ProfileIn(Profile):
+    location:str
+    user_id: int
+    
     
     
     
